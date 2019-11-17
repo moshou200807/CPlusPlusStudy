@@ -10,8 +10,8 @@ const多才多艺，可以：
 
 		const int test = 1;
 		int const test = 1; //对于普通变量，const的位置在类型前后的意义等价
-		
-		char greeting[] = "Hello";	
+
+		char greeting[] = "Hello";
 		//对于指针，取决于const出现在 * 左边或右边：出现在左边，表示指针所指之物为常量；出现在右边，表示指针本身为常量：
 		char* p = greeting;         //non-const pointer,non-const data
 		const char* p = greeting;   //non-const pointer,const data
@@ -23,7 +23,7 @@ const多才多艺，可以：
 		const std::vector<int>::iterator iter = vec.begin();	// 迭代器本身为const类型。实际上，迭代器是一个类，内部包含指向容器某部位的指针。
 		*iter = 10; //ok。	试图修改迭代器对象内部指针所指的值，并没有修改迭代器对象本身的内容，合法。
 		++iter;     //error	。 试图修改迭代器对象内部指针本身的值，非法。
-		
+
 		std::vector<int>::const_iterator cIter = vec.begin();	// 迭代器本身非const，迭代器内部的指针为 const T * 类型。
 		*cIter = 10; //error。	试图修改迭代器内部指针所指的值。而迭代器内部指针指向的值为const类型。非法。
 		++cIter;     //ok。	试图修改迭代器内部指针本身的值。迭代器内部指针本身不是const类型，合法。
@@ -38,13 +38,13 @@ const多才多艺，可以：
 
 	class Rational{};
 	const Rational operator* (const Rational& lhs, const Rational& rhs);
-	
+
 	Rational a, b, c;
 	(a * b) = c; // 用const修饰返回值的话，这样的错误就能在编译阶段被立马侦查出来：企图赋值给const类型的变量
 
 #### 三. const修饰成员函数
 ##### 3.1 const与非const同名函数的重载关系
-两个成员函数即使只是常量性不同，也可以被重载。同样的，基于一个指针或引用形参是否为指向const，也可以被重载。  
+两个成员函数即使只是常量性不同，也可以被重载。同样的，基于一个**指针或引用形参**是否为指向const，也可以被重载。  
 
 	class TextBlock {
 	public:
@@ -70,7 +70,7 @@ const多才多艺，可以：
 	- const成员函数**可以修改它所处理的对象内的某些bits，但条件是客户端侦测不出来**(客户端无法直接或间接获取这些bits)。  
 	- C++编译器不直接支持。但是利用**mutable**释放non-static成员变量的bitwise constness约束。  
 
-	
+
 			class CTextBlock {  
 			public:  
 			    ...  
@@ -101,7 +101,7 @@ const多才多艺，可以：
 		     ...  
 	    	 return text[position];  
 		}  
-	 
+
 		char& operator[](std::size_t position)    //现在只调用const op[]  
 		{  
 			return  
